@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load colloscope %}
+{% block content %}
+<h2>
+  Colloscope
+  <small>{{ classe }} − {{ classe.annee }}</small>
+</h2>
+
+<table class="colloscope">
+  <thead>
+    <tr>
+      <th rowspan="2">Matière</th>
+      <th rowspan="2">Professeur</th>
+      <th rowspan="2">Jour</th>
+      <th rowspan="2">Heure</th>
+      <th rowspan="2">Salle</th>
+      {% for semaine in semaines %}
+      <th class="numero_semaine">{{ semaine.numero }}</th>
+      {% endfor %}
+    </tr>
+  
+    <tr>
+      {% for semaine in semaines %}
+      <th class="date_semaine">{{ semaine.debut | date:"d/m"}}<br>{{ semaine.fin | date:"d/m"}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+
+  {% regroup creneaux by matiere as matiere_list %}
+  {% for matiere in matiere_list %}
+  <tbody>
+    {% for creneau in matiere.list %}
+    <tr>
+      <th>{% ifchanged creneau.matiere %}{{ creneau.matiere }}{% endifchanged %}</th>
+      <th>{{ creneau.colleur.short_display_name }}</th>
+      <th>{{ creneau.get_jour_display }}</th>
+      <th>{{ creneau.debut | heure_pour_colloscope }}−{{ creneau.fin | heure_pour_colloscope}}</th>
+      <th>{{ creneau.salle }}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+  {% endfor %}
+</table>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "base-bare.html" %}
+{% load navigation %}
+{% block body %}
+<header>
+  <h1>
+    <a href="{% url 'home' %}">
+      <i class="fa fa-graduation-cap"></i>
+      {% block h1 %}pyKol{% endblock %}
+    </a>
+  </h1>
+
+  {% show_navigation %}
+</header>
+
+<div id="main">
+
+  <div id="content">
+    {% block content %}{% endblock %}
+  </div>
+
+  <footer>
+    {% block footer %}{% endblock%}
+    pyKol
+  </footer>
+
+</div>
+{% endblock body %}
